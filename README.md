@@ -62,23 +62,23 @@ ACTIONS:
 
 1. print utmp records
 
-./hidemyass -u -p
+    ./hidemyass -u -p
 
 2. print utmp records in other path
 
-./hidemyass --utmp=/var/adm/utmpx -p
+    ./hidemyass --utmp=/var/adm/utmpx -p
 
 3. print all records
 
-./hidemyass -uwbl -p
+    ./hidemyass -uwbl -p
 
 4. modify lastlog record for user root to time 2017/04/01 13:26:00
 
-./hidemyass -l -n root -t 2017:04:01:13:26:00 -c
+    [sudo] ./hidemyass -l -n root -t 2017:04:01:13:26:00 -c
 
 5. clean all tmpx records that from ip 220.181.57.217
 
-./hidemyass -uwb -a 220.181.57.217 -c
+    [sudo] ./hidemyass -uwb -a 220.181.57.217 -c
 
 
 # TODO
