@@ -20,7 +20,7 @@ We're modifying those systemlog very carefully by removing one single log record
 instead of the whole log file. Also, the file permission, owner/group and ctime/atime 
 are kept as the old file.
 
-# usage
+# Usage
 
 ```
 Usage: ./hidemyass [ENTRIES] [FILTERS] ACTIONS        
@@ -34,9 +34,12 @@ ENTRIES:
   -b, --btmp=btmp_file                
       specify the path to btmp file, which is /var/log/btmp by default 
       btmp is read by 'lastb' and other commands
+      for some systems the bad login attempts are written to
+      /var/log/auth.log or /var/log/secure instead of btmp
   -l, --lastlog=lastlog_file          
       specify the path to lastlog file, which is /var/log/lastlog by default 
       lastlog is read by 'lastlog' and other commands
+      note the only valid FILTERS for lastlog is username(-n)
 FILTERS:                                
   -n, --name=username                   
       specify log record by username 
@@ -49,11 +52,34 @@ ACTIONS:
       print records for specified ENTRIES 
   -c, --clear                           
       clear records for specified ENTRIES with FILTERS
-      usually you need permission to edit log 
+      usually you need permission to tamper logs 
   -h, --help                            
       show this message and exit
  
 ```
+
+# Examples
+
+1. print utmp records
+
+./hidemyass -u -p
+
+2. print utmp records in other path
+
+./hidemyass --utmp=/var/adm/utmpx -p
+
+3. print all records
+
+./hidemyass -uwbl -p
+
+4. modify lastlog record for user root to time 2017/04/01 13:26:00
+
+./hidemyass -l -n root -t 2017:04:01:13:26:00 -c
+
+5. clean all tmpx records that from ip 220.181.57.217
+
+./hidemyass -uwb -a 220.181.57.217 -c
+
 
 # TODO
 

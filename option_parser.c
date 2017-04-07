@@ -141,9 +141,12 @@ ENTRIES:                                \n\
   -b, --btmp=btmp_file                \n\
       specify the path to btmp file, which is /var/log/btmp by default \n\
       btmp is read by 'lastb' and other commands\n\
+      for some systems the bad login attempts are written to \n\
+      /var/log/auth.log or /var/log/secure instead of btmp\n\
   -l, --lastlog=lastlog_file          \n\
       specify the path to lastlog file, which is /var/log/lastlog by default \n\
       lastlog is read by 'lastlog' and other commands\n\
+      note the only valid FILTERS for lastlog is username(-n)\n\
 FILTERS:                                \n\
   -n, --name=username                   \n\
       specify log record by username \n\
@@ -156,7 +159,7 @@ ACTIONS: \n\
       print records for specified ENTRIES \n\
   -c, --clear                           \n\
       clear records for specified ENTRIES with FILTERS\n\
-      usually you need permission to edit log \n\
+      usually you need permission to tamper logs \n\
   -h, --help                            \n\
       show this message and exit\n\
  ";               

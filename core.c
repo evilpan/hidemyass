@@ -301,7 +301,7 @@ int clear_xtmp(const char *filepath, hma_option *poption)
         if (read_size > 0) {
             if ( 0 == match_xtmp_record(&record, poption) ) {
                 print_utmp_record(&record);
-                modified = 1;
+                modified += 1;
             }
             else {
                 write(destfd, &record, sizeof(record));
@@ -320,8 +320,10 @@ int clear_xtmp(const char *filepath, hma_option *poption)
     close(sourcefd);
     close(destfd);
 
-    if (modified)
+    if (modified) {
+        printf("delete %d records in %s\n", modified, filepath);
         return restore(tmpfile, filepath);
+    }
     else 
         printf("record not matched, not modifing %s\n", filepath);
     return 0;
