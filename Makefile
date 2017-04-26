@@ -6,7 +6,7 @@ test:
 	$(MAKE) -C unit_test
 
 hidemyass : main.c option_parser.c core.c 
-	$(CC) $(CFLAGS) $^ -o $@ 
+	$(CC) $(CFLAGS) $^ -o $@
 
 clean:
 	rm -rf hidemyass

@@ -71,7 +71,7 @@ int print_xtmp(const char *filepath)
 {
     int fd = open(filepath, O_RDONLY);
     if (fd < 0) {
-        printf("failed to open %s: %s\n", filepath, strerror(errno));
+        fprintf(stderr, "failed to open %s: %s\n", filepath, strerror(errno));
         return -1;
     }
     struct utmpx record;
@@ -95,7 +95,7 @@ int print_xtmp(const char *filepath)
             break;
         }
         else// if (read_size < 0)
-            printf("failed to read %s: %s\n", filepath, strerror(errno));
+            fprintf(stderr, "failed to read %s: %s\n", filepath, strerror(errno));
             break;
     }
 
@@ -112,7 +112,7 @@ int name2id(const char *username)
             //printf("user %s not found\n", username);
             return -1;
         } else {
-            printf("getpwnam(%s) error: %s\n", username, strerror(errno));
+            fprintf(stderr, "getpwnam(%s) error: %s\n", username, strerror(errno));
             return -1;
         }
     }
@@ -137,13 +137,13 @@ int getllog_from_uid(int llogfd, int uid, struct lastlog *record)
             break;
         int llog_size = sizeof(struct lastlog);
         if (-1 == lseek(llogfd, uid * llog_size, SEEK_SET)) {
-            printf("failed to lseek lastlog: %s\n", strerror(errno));
+            fprintf(stderr, "failed to lseek lastlog: %s\n", strerror(errno));
             break;
         }
         memset(record, 0, llog_size);
         ssize_t read_size = read(llogfd, record, llog_size);
         if (read_size < 0) {
-            printf("failed to read lastlog: %s\n",  strerror(errno));
+            fprintf(stderr, "failed to read lastlog: %s\n",  strerror(errno));
             break;
         } else if (read_size == 0) {
             break;
@@ -158,7 +158,7 @@ int print_lastlog(const char *filepath, const char *username)
     printf("=== %s ===\n",filepath);
     int fd = open(filepath, O_RDONLY);
     if (fd < 0) {
-        printf("failed to open %s: %s\n", filepath, strerror(errno));
+        fprintf(stderr, "failed to open %s: %s\n", filepath, strerror(errno));
         return -1;
     }
     printf(LLOG_FORMAT,
@@ -232,12 +232,12 @@ int restore(const char *tmpfile, const char *sourcefile)
     struct stat statbuf;
     memset(&statbuf, 0, sizeof(statbuf));
     if (0 != stat(sourcefile, &statbuf) ) {
-        printf("failed to get stat of %s: %s\n", sourcefile, strerror(errno) );
+        fprintf(stderr, "failed to get stat of %s: %s\n", sourcefile, strerror(errno) );
         return -1;
     }
-    printf("uid=%d,gid=%d,mode=%o,atime=%s,mtime=%s\n",
-            statbuf.st_uid, statbuf.st_gid, statbuf.st_mode,
-            seconds2str(statbuf.st_atime), seconds2str(statbuf.st_mtime));
+    //printf("uid=%d,gid=%d,mode=%o,atime=%s,mtime=%s\n",
+    //        statbuf.st_uid, statbuf.st_gid, statbuf.st_mode,
+    //        seconds2str(statbuf.st_atime), seconds2str(statbuf.st_mtime));
 
     if (0 != chmod(tmpfile, statbuf.st_mode) ) {
         perror("chmod");
@@ -251,7 +251,7 @@ int restore(const char *tmpfile, const char *sourcefile)
         return -1;
 
     if( -1 == rename(tmpfile, sourcefile) ) {
-        printf("failed to copy %s -> %s, %s\n",
+        fprintf(stderr, "failed to copy %s -> %s, %s\n",
                 tmpfile, sourcefile,
                 strerror(errno));
         return -1;
@@ -280,12 +280,12 @@ int clear_xtmp(const char *filepath, hma_option *poption)
     printf("searching record in file %s\n",filepath);
     int sourcefd = open(filepath, O_RDONLY);
     if (sourcefd < 0) {
-        printf("failed to open %s: %s\n", filepath, strerror(errno));
+        fprintf(stderr, "failed to open %s: %s\n", filepath, strerror(errno));
         return -1;
     }
     int destfd = open(tmpfile, O_RDWR | O_CREAT);
     if (destfd < 0) {
-        printf("failed to create tmp file: %s\n", strerror(errno));
+        fprintf(stderr, "failed to create tmp file: %s\n", strerror(errno));
         close(sourcefd);
         return -1;
     }
@@ -313,7 +313,7 @@ int clear_xtmp(const char *filepath, hma_option *poption)
             break;
         }
         else// if (read_size < 0)
-            printf("failed to read %s: %s\n", filepath, strerror(errno));
+            fprintf(stderr, "failed to read %s: %s\n", filepath, strerror(errno));
             break;
     }
 
@@ -337,13 +337,13 @@ int clear_lastlog(const char *filepath, hma_option *poption)
         return -1;
     int fd = open(filepath, O_RDWR);
     if (fd == -1) {
-        printf("failed to open %s: %s\n", filepath, strerror(errno));
+        fprintf(stderr, "failed to open %s: %s\n", filepath, strerror(errno));
         return -1;
     }
     struct stat statbuf;
     memset(&statbuf, 0, sizeof(statbuf));
     if (0 != stat(filepath, &statbuf) ) {
-        printf("failed to get stat of %s: %s\n", filepath, strerror(errno) );
+        fprintf(stderr, "failed to get stat of %s: %s\n", filepath, strerror(errno) );
         return -1;
     }
     struct lastlog llog;
@@ -366,7 +366,7 @@ int clear_lastlog(const char *filepath, hma_option *poption)
             }
         }
         else
-            printf("no record for user %s in %s\n",
+            fprintf(stderr, "no record for user %s in %s\n",
                     poption->name.key, filepath);
     
     }while(0);
@@ -377,6 +377,7 @@ int clear_lastlog(const char *filepath, hma_option *poption)
 
 int clear_byopt(hma_option *poption)
 {
+    puts("=== results ===");
     if (poption->utmp.enable)
         clear_xtmp(poption->utmp.path, poption);
     if (poption->wtmp.enable)
@@ -387,7 +388,7 @@ int clear_byopt(hma_option *poption)
         if (poption->name.enable)
             clear_lastlog(poption->lastlog.path, poption);
         else
-            printf("you need to specify a username to clear lastlog\n");
+            fprintf(stderr, "you need to specify a username to clear lastlog\n");
     }
     return 0;
 }
