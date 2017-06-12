@@ -46,7 +46,7 @@ int parse_option(int argc, char **argv, hma_option *poption)
         {"address", required_argument,  NULL, 'a'},
         {"time", required_argument,  NULL, 't'},
         {"print", no_argument,  NULL, 'p'},
-        {"clear", no_argument,  NULL, 'c'},
+        {"confirm", no_argument,  NULL, 'c'},
         {"help", no_argument,  NULL, 'h'},
         {0,0,0,0}
     };
@@ -157,9 +157,9 @@ FILTERS:                                \n\
 ACTIONS: \n\
   -p, --print                           \n\
       print records for specified ENTRIES \n\
-  -c, --clear                           \n\
-      clear records for specified ENTRIES with FILTERS\n\
-      usually you need permission to tamper logs \n\
+  -c, --confirm                           \n\
+      confirm the action(s) that clear or temper records for specified ENTRIES with FILTERS\n\
+      usually you need permission doing this \n\
   -h, --help                            \n\
       show this message and exit\n\
  ";               

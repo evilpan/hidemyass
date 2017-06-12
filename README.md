@@ -15,14 +15,18 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ```
 
-This is a tool for wiping access log when you really wanna hide yourself from admin.
-We're modifying those systemlog very carefully by removing one single log record 
+`hidemyass` is a tool for wiping access log when you really wanna hide yourself from admin.
+We're modifying those systemlogs very carefully by removing one single log record 
 instead of the whole log file. Also, the file permission, owner/group and ctime/atime 
 are kept as the old file.
 
 # Usage
 
-```
+```text
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+轻轻地我走了     正如给我轻轻地来                  
+        我轻轻地挥手     作别西边的云彩            
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Usage: ./hidemyass [ENTRIES] [FILTERS] ACTIONS        
 ENTRIES:                                
   -u, --utmp=utmp_file                
@@ -34,7 +38,7 @@ ENTRIES:
   -b, --btmp=btmp_file                
       specify the path to btmp file, which is /var/log/btmp by default 
       btmp is read by 'lastb' and other commands
-      for some systems the bad login attempts are written to
+      for some systems the bad login attempts are written to 
       /var/log/auth.log or /var/log/secure instead of btmp
   -l, --lastlog=lastlog_file          
       specify the path to lastlog file, which is /var/log/lastlog by default 
@@ -50,12 +54,11 @@ FILTERS:
 ACTIONS: 
   -p, --print                           
       print records for specified ENTRIES 
-  -c, --clear                           
-      clear records for specified ENTRIES with FILTERS
-      usually you need permission to tamper logs 
+  -c, --confirm                           
+      confirm the action(s) that clear or temper records for specified ENTRIES with FILTERS
+      usually you need permission doing this 
   -h, --help                            
       show this message and exit
- 
 ```
 
 # Examples
