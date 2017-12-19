@@ -63,23 +63,23 @@ ACTIONS:
 
 # Examples
 
-1. print utmp records
+print utmp records:
 
 `./hidemyass -u -p`
 
-2. print utmp records in another path
+print utmp records in another path
 
 `./hidemyass --utmp=/var/adm/utmpx -p`
 
-3. print all records
+print all records
 
 `./hidemyass -uwbl -p`
 
-4. modify lastlog record for user root to time 2017/04/01 13:26:00
+modify lastlog record for user root to time 2017/04/01 13:26:00
 
 `[sudo] ./hidemyass -l -n root -t 2017:04:01:13:26:00 -c`
 
-5. clean all tmpx records that from ip 220.181.57.217
+clean all tmpx records that from ip 220.181.57.217:
 
 `[sudo] ./hidemyass -uwb -a 220.181.57.217 -c`
 
@@ -93,8 +93,9 @@ ACTIONS:
 - /var/log/faillog
 - /var/log/maillog
 
-
 Since you could modify system log, that usually means you have already got
 privilege escalation. As a result, you may want to clear other logs too, 
 such as `/var/log/kern.log`, `/var/log/syslog`, `/var/log/dmesg`, `/var/log/messages` and some 
 application crash logs.
+
+For all log locations, please check about your `rsyslogd`'s config (usually in `/etc/rsyslog.conf`).
