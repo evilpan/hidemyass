@@ -46,16 +46,16 @@ ENTRIES:
       note the only valid FILTERS for lastlog is username(-n)
 FILTERS:                                
   -n, --name=username                   
-      specify log record by username 
+      filter log record by username 
   -a, --address=host                    
-      specify log record by host ip address  
+      filter log record by host ip address  
   -t, --time=time                       
-      specify log record by time (YYYY:MM:DD:HH:MM:SS) 
+      filter log record by time (YYYY:MM:DD:HH:MM:SS) 
 ACTIONS: 
   -p, --print                           
       print records for specified ENTRIES 
   -c, --confirm                           
-      confirm the action(s) that clear or temper records for specified ENTRIES with FILTERS
+      confirm the action(s) that clear or tamper records for specified ENTRIES with FILTERS
       usually you need permission doing this 
   -h, --help                            
       show this message and exit
